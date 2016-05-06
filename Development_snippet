@@ -1,0 +1,12 @@
+begin_trx.cube
+    .slice(LocalDate.new.minusDays(3), LocalDate.new.minusDays(3))
+    .slice("products", "code = '0850044411' ")
+    .slice("locations", "code = '0188'")
+    .view("product_locations",
+          "
+
+<<INSERT FORMULA HERE>>
+
+as tql"
+    )
+    .first.get_attribute("tql")

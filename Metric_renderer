@@ -1,0 +1,7 @@
+$ui_config.custom_extend(MetricRenderer) do
+    group :test do |g|
+    g.metric :customer_19443_3, "Availability test 3", :type => :percentage,
+    :tql => "min(1, max((sum(daily_values.stocked && daily_values.open && daily_values.balance) + sum(transactions.open_orders_quantity)) / sum(daily_values.stocked && daily_values.open && product_locations.ugly_shelf_point)
+               ,min((sum(daily_values.stocked && daily_values.open && daily_values.balance > 0) || 0) / sum(daily_values.stocked && daily_values.open), ((sum(daily_values.stocked && daily_values.open && daily_values.balance) / sum(daily_values.stocked && daily_values.open && product_locations.ugly_shelf_point)))), 0))";
+    end;
+    end;
