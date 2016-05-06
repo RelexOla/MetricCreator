@@ -1,0 +1,7 @@
+1. Recognize issue.
+2. Find a suitable test case in small enough environment (perhaps a single product location).
+3. Make the metric work.
+4. Deploy the metric.
+5. Validate the metric in small scale. Problems -> step 1.
+6. Validate the metric in a bigger scale. Problems -> step 1.
+7. Finished =)
