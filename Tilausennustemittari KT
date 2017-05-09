@@ -1,0 +1,3 @@
++         g.metric :customer_delivery_metric, "Ennakkolaskelma - päivän tilausehdotukset", :type => :quantity,
++           :tql => "sum(simulated_values.delivered_orders_quantity) - period[$today, $today](sum(order_proposals.delivery_date >= $parent_start && order_proposals.delivery_date <= $parent_end && order_proposals.effective_quantity) || 0)",
++           :help => "Ennakkolaskelma jos on poistettu kuluvan päivän tilausehdotukset"

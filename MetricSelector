@@ -1,4 +1,3 @@
 MetricRenderer.all_fields.select{ |f|
     f.name == :customer_test_metric_ola
-}.first.options[:tql] = "sum(daily_values.open) && level[user,products](sum(locations.code == '9000' && (daily_values.balance > 0) || 0) / sum(locations.code == '9000' && (daily_values.date >= product_locations#getFirstBalanceOrDeliveryDate)))"
-
+}.first.options[:tql] =    :tql => "level[user,products](sum(locations.code == '9000' && (daily_values.open && daily_values.balance > 0) || 0) / sum(locations.code == '9000' && (daily_values.date >= min(min_date(daily_values.open && daily_values.balance > 0), min_date(transactions.delivered_orders_quantity)) && daily_values.open)))"

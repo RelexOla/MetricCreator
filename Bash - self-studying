@@ -1,0 +1,14 @@
+
+# Find lines from files containing regex
+find . -name '*.rb' -exec grep -i 'ola' {} \; -print
+grep pattern file
+
+# Find files older than x days and move them to a place
+
+find /path/to/find/from -mtime +x -exec command "{}" parameter \;
+
+
+20528953002;20529008005;20528954002;20915554001;20528953013;20915554002;20915553002
+
+
+10438 55512

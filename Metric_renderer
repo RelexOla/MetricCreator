@@ -1,11 +1,23 @@
 $ui_config.custom_extend(MetricRenderer) do
     group :test do |g|
-    g.metric :customer_19443_3, "Availability test 3", :type => :percentage,
-    :tql => "min(1, max((sum(daily_values.stocked && daily_values.open && daily_values.balance) + sum(transactions.open_orders_quantity)) / sum(daily_values.stocked && daily_values.open && product_locations.ugly_shelf_point)
-               ,min((sum(daily_values.stocked && daily_values.open && daily_values.balance > 0) || 0) / sum(daily_values.stocked && daily_values.open), ((sum(daily_values.stocked && daily_values.open && daily_values.balance) / sum(daily_values.stocked && daily_values.open && product_locations.ugly_shelf_point)))), 0))";
+    g.metric :customer_consecutive_days_2, "Peräkkäiset päivät ennakoitu toimitus Testi", :type => :quantity, :aggregate => :sum,
+               :tql => "period[sum(order_proposals.delivery_date)+1,sum(order_proposals.delivery_date)+1](sum(simulated_values.delivered_orders_quantity))"
     end;
     end;
 
 
 FastormDb.database.soft_cache.clear
 Clear the soft_cache to refresh UI !
+
+        g.field :customer_order_proposal_consecutive_days, "Peräkkäisen toimituspäivän ennakoitu toimitus",
+               :tql => "period[order_proposals.delivery_date+1,order_proposals.delivery_date+1](sum(simulated_values.delivered_orders_quantity))",
+               :type => :quantity
+
+               OrderProposalRenderer.all_fields.select{ |f|
+                   f.name == :customer_order_proposal_consecutive_days
+               }.first.options[:aggregate] =  :sum
+
+
+$ui_config.add_readers do
+    @readers[:tuotteet_ean_koodilla] = GenericReaderUsingAnyColumns.new("products", processor_context.dao_dao, ["ean"].to_java(:string))
+end;

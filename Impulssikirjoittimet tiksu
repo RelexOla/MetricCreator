@@ -1,0 +1,19 @@
+Tilausehdotuskirjoittimen runko on olemassa adapteriluokassa SokPtStoreOrderProposalWriterXML. Kirjoittimen tuottama runko on hyväksytty SOKin päässä.
+
+Tässä kirjoittimen viimeistelemiseen tarvittavat työvaiheet:
+
+* Selvitä näkymä, jolta kirjoitin laukaistaan. Mikäli kirjoittimen halutaan ottavan mukaan kenttiä näkymän ulkopuolelta, ne täytyy erikseen määritellä customer configissa.
+* Selvitä, onko tilausehdotukset laskettu niin, että määrä ilmoitetaan AINA toimituspakkauksina (tämä on merkittävää kirjoittimen sisäisen logiikan kannalta).
+* Selvitä, mitä kaikkea täytyy säätää konffissa ja optimoinneissa, että tilausehodtukset saadaan lähtemään automaagisesti (katso sok-kt:n conffista mallia).
+* Tee tarvittava koodaus yllä olevien selvitysten perusteella.
+* Tee tarvittavat skriptit, jotta uloskirjoitettu tiedosto siirtyy haluttuna ajankohtana FS1:lle output kansioon.
+
+There are two writers used in SOK-KT environment;
+* SokKtEpXmlWriter -- used to send impulse parameters (actual data)
+* SokKtEpResponseXmlWriter -- used to send out info that impulse is processed
+
+These need to be implemented in SOK-PT-Store with few changes.
+* Sending Product-location level parameter 'voimassa oleva tilattava toimituspakkaus' Tuote-lokaatio: Toimituserän koko [product_locations.order_quantity]
+
+
+ "Toimituspakkaus estetty MYY", "Toimituspakkaus estetty LAV" ja "Toimituspakkaus estetty PAL" [product_locations.customer_batchsize_prohibited_myy/lav/pal]. Vaihtoehtoina näissä perus Kyllä/Ei ja ei muokattava UI:ssa, UI-ryhmä "Toimituspakkaus"

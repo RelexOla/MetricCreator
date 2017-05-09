@@ -1,0 +1,34 @@
+
+
+begin_trx.cube
+    .slice(LocalDate.new('2016-11-01'),LocalDate.new('2016-11-01'))
+    .slice("products", "code == '20069950'")
+    .slice("locations", "code == '300_1'")
+    .view("product_locations",
+          "
+sum(simulated_values.delivered_orders_quantity / products.customer_uom_multiplier_mp)
+
+as tql
+
+"
+    )
+.first.get_attribute("tql")
+
+
+$ui_config.custom_extend(MetricRenderer) do
+   group :test do |g|
+        g.field :customer_ennakoidut_tomitukset_myyntipakkauksina_2, "Ennakoidut toimitukset myyntipakkauksina 2", :type => :quantity,
+        :tql => "sum(simulated_values.delivered_orders_quantity / products.customer_uom_multiplier_mp)"
+
+    end;
+end;
+
+
+
+MetricRenderer.all_fields.select{ |f|
+    f.name == :customer_ennakoidut_tomitukset_myyntipakkauksina_2
+}.first.options[:tql] =  "sum(simulated_values.delivered_orders_quantity / products.customer_uom_multiplier_mp)"
+
+
+
+ / sum(products.customer_uom_multiplier_mp)

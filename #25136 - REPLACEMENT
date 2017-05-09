@@ -1,0 +1,30 @@
+begin_trx.cube
+    .slice("products", "code == '21085635'")
+    .slice("locations", "code == '300_AB'")
+    .view("product_locations",
+          "
+
+first_replaced(max(product_locations.order_model)) == 'MRP' ? 'EXT' : max(product_locations.order_model)
+
+
+as tql
+
+"
+    )
+.first.get_attribute("tql")
+21071110001
+21045689006
+begin_trx.cube
+    .slice("products", "code == '21085635'")
+    .slice("locations", "code == '300_1'")
+    .view("product_locations",
+          "
+
+first_replaced(max(product_locations.order_model))
+
+
+as tql
+
+"
+    )
+.first.get_attribute("tql")

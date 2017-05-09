@@ -1,0 +1,1 @@
+Product.where("ean != null && ean != '0000000000000'").map{ |p| p.ean }.uniq.map { | e | [a.count(e), e] }.select { | c, _ | c > 1 }.sort.reverse.map { | c, e | "#{e}:#{c}" }

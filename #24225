@@ -1,0 +1,11 @@
+Product.all.each{ |product|
+productlocation=ProductLocation.where("products.code == product.code", "locations.code == 'CREWE'").all
+if productlocation != nil
+    productlocation.update("customer_promo_tag_1", product.customer_promo_tag_1);
+    productlocation.update("customer_promo_tag_2", product.customer_promo_tag_2);
+    productlocation.update("customer_promo_tag_3", product.customer_promo_tag_3);
+end
+}
+
+
+

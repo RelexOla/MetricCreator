@@ -1,0 +1,1 @@
+java -Dxml_file=file:///opt/apps/data/apps/processor-sok-kt-development/shared/customer/checker.config_ola -cp /opt/apps/data/apps/processor-sok-kt-development/shared/customer/customer.jar fi.relex.customer.GenericCheckupRun frid

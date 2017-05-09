@@ -1,0 +1,1 @@
+Trx.current.cube.slice(ProductLocation.where("products.code = 'YN58R2G03MHGS3AV' && locations.code = '12761'").first).slice(Fastorm::LocalDate.new('2016-01-22'), Fastorm::LocalDate.new('2016-01-22')).view("daily_values").first

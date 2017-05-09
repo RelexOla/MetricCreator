@@ -1,0 +1,50 @@
+begin_trx.cube
+    .slice(LocalDate.new('2016-11-28'),LocalDate.new('2016-11-28'))
+    .slice("products", "code == '20069950'")
+    .slice("locations", "code == '300_1'")
+    .view("product_locations",
+          "
+sum(sales_forecasts.effective_quantity / products.customer_uom_multiplier_mp)
+
+as tql
+
+"
+    )
+.first.get_attribute("tql")
+
+$ui_config.custom_extend(MetricRenderer) do
+   group :test do |g|
+        g.field :customer_efektiivinen_ennuste_myyntipakkauksina_testi, "Efektiivinen ulosmyyntiennuste myyntipakkauksina (testi)", :type => :quantity,
+        :tql => "sum(sales_forecasts.effective_quantity / (products.customer_uom_multiplier_mp || 1))"
+    end;
+end;
+
+
+
+
+
+
+begin_trx.cube
+    .slice(LocalDate.new('2016-10-02'),LocalDate.new('2016-10-30'))
+    .slice("products", "code == '20061355'")
+    .slice("locations", "code == 'TR'")
+    .view("product_locations",
+          "
+sum(sales_forecasts.effective_quantity / period[$start - 360, $start](#{MetricRenderer.find_field(:average_sales_row).options[:tql]}))
+
+as tql
+
+"
+    )
+.first.get_attribute("tql")
+
+$ui_config.custom_extend(MetricRenderer) do
+   group :test do |g|
+        g.field :customer_efektiivinen_ennuste_riveina, "Efektiivinen ulosmyyntiennuste riveinä", :type => :quantity,
+        :tql => "sum(sales_forecasts.effective_quantity / period[$start - 360, $start](#{MetricRenderer.find_field(:average_sales_row).options[:tql]}))"
+    end;
+end;
+
+MetricRenderer.all_fields.select{ |f|
+    f.name == :customer_efektiivinen_ennuste_riveina
+}.first.options[:tql] = "sum(sales_forecasts.effective_quantity / (period[$start - 360, $start](#{MetricRenderer.find_field(:average_sales_row).options[:tql]}) || 1))"

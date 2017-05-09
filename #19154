@@ -1,0 +1,8 @@
+begin
+    raise LoadError, "My first exception"
+rescue LoadError => e
+    raise Exception, "My second exception"
+rescue Exception => e
+    puts "rescued is not working huh"
+end
+

@@ -1,0 +1,23 @@
+MetricRenderer.all_fields.select{ |f|
+    f.name == :customer_vapaa_saldo_tasmennys
+}.first.options[:tql] = "period[$end, $end](sum(daily_values.balance) || 0) - period[$end, $end](sum(transactions.date <= $end && transactions.date > ($end - 90) && transactions.sales_orders_quantity) || 0)"
+
+
+
+SV-testi
+Send balances to KT market
+--ftp.fs.output.localInputDir ../../../shared/data/transactions/input/ --ftp.fs.fsinput.loginname relex2relex --ftp.fs.fsinput.password WaptyupKu --ftp.fs.output.server.ip relex-kt-market-test.sok.fi --ftp.fs.output.remoteOutputDir data/relex2relex/inexkt2sokkt --ftp.fs.fetch.checker.on false --ftp.fs.output.pattern input_2.*_STC.* --ftp.fs.output.protocol FTP --ftp.fs.output.dont.delete.file true
+
+Send open orders to SOKOS
+--ftp.fs.output.localInputDir ../../../shared/data/transactions/input/ --ftp.fs.fsinput.loginname relex2relex --ftp.fs.fsinput.password knicirEk --ftp.fs.output.server.ip relex-sokos-test.sok.fi --ftp.fs.output.remoteOutputDir data/relex2relex/inexkt2sokos --ftp.fs.fetch.checker.on false --ftp.fs.output.pattern input_2.*_STC.* --ftp.fs.output.protocol FTP --ftp.fs.output.dont.delete.file true
+
+
+KT-testi
+InexKt2SokKt
+fi.relex.customer.sokkt_fastorm.relex2relex.InexKt2SokKtDailyMain
+
+
+
+--ftp.fs.output.localInputDir ../../../shared/data/messages/input/ --ftp.fs.fsinput.loginname relex2relex --ftp.fs.fsinput.password WaptyupKu --ftp.fs.output.server.ip relex-kt-market-test.sok.fi --ftp.fs.output.remoteOutputDir data/relex2relex/inexkt2sokkt --ftp.fs.fetch.checker.on false --ftp.fs.output.pattern Transaction_Update_2.*_STC.* --ftp.fs.output.protocol FTP --ftp.fs.output.dont.delete.file true
+
+--ftp.fs.output.localInputDir ../../../shared/data/messages/input/ --ftp.fs.fsinput.loginname relex2relex --ftp.fs.fsinput.password knicirEk --ftp.fs.output.server.ip relex-sokos-test.sok.fi --ftp.fs.output.remoteOutputDir data/relex2relex/inexkt2sokos --ftp.fs.fetch.checker.on false --ftp.fs.output.pattern Transaction_Update_2.*_STC.* --ftp.fs.output.protocol FTP --ftp.fs.output.dont.delete.file true

@@ -1,0 +1,27 @@
+        <context name="topsiNonCriticalMarttiTuotesuhde">
+            <contact><emails>markus.tyni@relexsolutions.com;leena.lintunen@relexsolutions.com;Ola.Lansman@relexsolutions.com</emails></contact>
+            <mailSubject>[MARKET KT RELEX] Topsi checker 3 for Market KT RELEX non-critical files</mailSubject>
+            <mailBody>
+Topsi checker for Market KT RELEX non-critical Marttituotesuhde file
+
+File MARTTITUOTESUHDE.MARTTI.KTRELEX.YYYYMMDD.XXXXXX.csv has not arrived in RELEX by the checker time at 20:35 EET.
+
+This is a non-critical file and the nightly run will continue without it.
+
+1. Ask Market Sovellustuki to notify the users of possible implications.
+
+Receivers: Market KT Relex end user distribution list
+
+Header: Market KT RELEX puutteita verrokkitiedoissa
+
+Message: Viimeisimmät verrokkitiedot puuttuvat Market KT RELEXistä, koska tiedostot olivat myöhässä. Tällä ei ole merkittävää vaikutusta, mutta eilen Martissa tapahtuneet muutokset eivät ole päivittyneet Market KT RELEXiin. Tiedot päivittyvät seuraavassa yöajossa tiedostojen saavuttua, mutta ilmoitattehan Market Sovellustukeen, mikäli tiedostot on tarpeen ajaa sisään jo työpäivän aikana.
+
+2. Continue investigating why file has not been sent and make sure that this will not happen the next day.
+           </mailBody>
+            <file match="any">
+                <path>/opt/apps/$moduleId$/shared/customer/input/</path>
+                <path>/opt/apps/$moduleId$/shared/data/original/</path>
+                <pattern date="yesterday">MARTTITUOTESUHDE.MARTTI.KTRELEX.$yyyyMMdd$_*</pattern>
+                <minCount>1</minCount>
+            </file>
+        </context>

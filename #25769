@@ -1,0 +1,19 @@
+
+    custom_extend(ProductLocationCampaignRenderer) do
+      group :basic do |g|
+        g.field :customer_esillepanon_maara, "Esillepanon määrä", :aggregate => :sum, :type => :float
+      end
+    end
+
+    custom_extend(CampaignRenderer) do
+      group :general do |g|
+        g.field :customer_esillepanon_valikoimaluokka, "Esillepanon valikoimaluokka", :type => :string
+      end
+    end
+
+        ProductLocationCampaign => {
+            :customer_esillepanon_maara => { :db_options => [:float]},
+        },
+        Campaign => {
+            :customer_esillepanon_valikoimaluokka => { :db_options => [:text]},
+        },

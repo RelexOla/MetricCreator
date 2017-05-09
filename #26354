@@ -1,0 +1,18 @@
+begin_trx.cube
+    .slice(LocalDate.new('2016-11-01'),LocalDate.new('2016-12-17'))
+    .slice("products", "code == 'LI2HVVGDV1NKOFJD'")
+    .slice("locations", "code == '7502'")
+    .view("product_locations",
+          "
+sum(transactions.order_type=null && transactions.delivered_orders_quantity)
+
+as tql
+
+"
+    )
+.first.get_attribute("tql")
+
+
+
+
+    .slice(LocalDate.new('2016-11-01'),LocalDate.new('2016-11-01'))

@@ -1,0 +1,11 @@
+$ui_config.custom_extend(MetricRenderer) do
+  group :forecast_metrics_long_timespans do |g|
+    g.metric :customer_budget_average_kg_price, "Kilohinta",
+             :tql => "sum(budgets.quantity)";
+  end;
+end;
+
+period[]
+
+
+sum( (:first_sales_date > (product_locations.customer_allocation_reference_date - 30)) || transactions.type == 'SALE' || transaction.quantity)

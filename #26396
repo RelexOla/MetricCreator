@@ -1,0 +1,46 @@
+$ui_config.custom_extend(MetricRenderer) do
+    group :test do |g|
+    g.metric :customer_saatavuus_testi_alkuperainen, "Sv saatavuus alkuperäinen", :type => :percentage,
+               :tql => "level[user,products](sum(locations.code == '9000' && (daily_values.open && daily_values.balance > 0) || 0) / sum(locations.code == '9000' && (daily_values.date >= product_locations#getFirstBalanceOrDeliveryDate && daily_values.open)))"
+
+                  end;
+    end;
+$ui_config.custom_extend(MetricRenderer) do
+    group :test do |g|
+    g.metric :customer_saatavuus_testi_alkuperainen_muokattu, "Sv saatavuus alkuperäinen muokattu", :type => :percentage,
+               :tql => "level[user,products](sum(locations.code == '9000' && (daily_values.open && daily_values.balance > 0) || 0) / sum(locations.code == '9000' && (daily_values.date >= min(min_date(daily_values.open && daily_values.balance > 0), min_date(transactions.delivered_orders_quantity)))))"
+
+                  end;
+    end;
+
+MetricRenderer.all_fields.select{ |f|
+    f.name == :customer_saatavuus_testi_alkuperainen_muokattu
+}.first.options[:tql] = "level[user,products](sum(locations.code == '9000' && (daily_values.open && daily_values.balance > 0) || 0) / sum(locations.code == '9000' && (daily_values.date >= min(min_date(daily_values.open && daily_values.balance > 0), min_date(transactions.delivered_orders_quantity)))))"
+
+               :tql => "level[user,products](sum(locations.code == '9000' && (daily_values.balance > 0) || 0) / sum(locations.code == '9000' && (daily_values.date >= min(min_date(daily_values.balance > 0), min_date(transactions.delivered_orders_quantity)))))"
+
+
+min(min_date(daily_values.open && daily_values.balance > 0), min_date(transactions.delivered_orders_quantity))
+
+$ui_config.custom_extend(MetricRenderer) do
+    group :test do |g|
+    g.metric :testi_1, "Test1: Marko", :type => :date,
+               :tql => "min(min_date(daily_values.open && daily_values.balance > 0), min_date(transactions.delivered_orders_quantity))"
+                  end;
+    end;
+
+$ui_config.custom_extend(MetricRenderer) do
+group :test do |g|
+g.metric :testi_22, "Test22: Marko - daily", :type => :date,
+       :tql => "min(min_date(daily_values.balance > 0), min_date(transactions.delivered_orders_quantity))"
+          end;
+end;
+
+
+$ui_config.custom_extend(MetricRenderer) do
+group :test do |g|
+g.metric :testi_3, "Test3: Original", :type => :date,
+       :tql => "sum(product_locations#getFirstBalanceOrDeliveryDate)"
+          end;
+end;
+

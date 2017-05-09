@@ -1,0 +1,27 @@
+MetricRenderer.all_fields.select{
+|f| f.name == :customer_dc_on_hand
+}.first.options[:tql] =  "period[$end, $end](level[user,products](sum(locations.code == '4233' && daily_values.balance)))"
+
+MetricRenderer.all_fields.select{
+|f| f.name == :customer_dc_on_hand
+}.first.options[:tql] =  "period[$end, $end](up[product_locations#get_warehouse_id]((sum(daily_values.balance))))"
+
+MetricRenderer.all_fields.select{
+|f| f.name == :customer_dc
+}.first.options[:tql] = "period[$end, $end](level[user, products](sum(locations.code == '4233' && daily_values.balance) || 0)) - period[$end, $end](level[user, products](sum(locations.code == '4233' && transactions.sales_orders_quantity) || 0))"
+
+
+
+$ui_config.custom_extend(MetricRenderer) do
+group :test do |g|
+g.metric :customer_dc, "DC available on hand TEST", :type => :quantity,
+        :tql => "period[$end, $end](level[user, products](sum(locations.code = '4233' && daily_values.balance) || 0)) - period[$end, $end](level[user, products](sum(locations.code = '4233' && transactions.sales_orders_quantity) || 0))"
+    end;
+end;
+
+$ui_config.custom_extend(MetricRenderer) do
+group :test do |g|
+g.metric :customer_dc_on_hand_test, "DC on hand", :type => :quantity,
+        :tql => "period[$end, $end](sum(locations.code = 4233 && daily_values.balance))"
+    end;
+end;

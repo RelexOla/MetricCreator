@@ -1,0 +1,29 @@
+$ui_config.custom_extend(MetricRenderer) do
+    group :test do |g|
+    g.metric :customer_help_parameter, "Tilausehdotuksen apuparametri",
+      :type => :quantity,
+      :tql => "period[$today -1, $today - 1](sum(daily_values.balance || 0)) +
+               period[$today, $today](sum(order_proposals.quantity || 0)) +
+               period[$today - 1, $today - 1](sum(transactions.estimated_date &&
+                 transactions.estimated_date >= $parent_start &&
+                 transactions.estimated_date <= $parent_end &&
+                 transactions.open_orders_quantity) || 0)",
+      :help => "Eilisen loppusaldo + Mittari: Viimeisin tilausehdotus + Mittari: Avoimet ostotilaukset toim.pv.  ", :replacements => :with_references
+end;
+end;
+
+$ui_config.custom_extend(MetricRenderer) do
+        group :test do |g|
+        g.metric :customer_help_parameter_mrp_period, "Tilausehdotuksen apuparametri MRP-jakson mukaan",
+                 :type => :quantity,
+                 :tql => "period[$today -1, $today - 1](sum(daily_values.balance) || 0) +
+                          period[$today, $today](sum(order_proposals.quantity) || 0) +
+                          period[$today - 1, $today - 1](sum(transactions.estimated_date &&
+                                                             transactions.estimated_date >= $today &&
+                                                             transactions.open_orders_quantity) || 0)",
+                 :help => "kaava: (Eilisen loppusaldo + Mittari: Viimeisin tilausehdotus + Mittari: Avoimet ostotilaukset toim.pv.) aikajakso: tänään->toinen tilauspvm-1",
+          :replacements => :with_references    end;
+    end;
+
+
+                                                             transactions.estimated_date <= (product_locations.customer_second_delivery_date - 1) &&

@@ -1,0 +1,23 @@
+begin_trx.cube
+   .view("product_location_campaigns",
+         "
+
+level[user,campaigns](min(product_location_campaigns.customer_campaign_max)) as tql
+
+"
+   )
+.first.get_attribute("tql")
+
+
+begin_trx.cube
+   .view("product_locations",
+         "
+
+count(products.code) as tql
+
+
+"
+   )
+.first.get_attribute("tql")
+
+

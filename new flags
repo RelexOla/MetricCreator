@@ -1,0 +1,3 @@
+t = begin_trx.get_table(:delivery_calendar_groups).get_column(:delivery_schedule_id);
+t.base_column.add_flag(Fastorm::BaseColumn::Flag::ON_DELETE_CASCADE);
+commit;

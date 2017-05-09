@@ -1,0 +1,5 @@
+$ui_config.custom_extend(MetricRenderer) do
+    group :test do |g|
+        g.metric :customer_additional_campaign_sales, "Additional sales campaign DR", :type => :percentage,
+        :tql => "sum[product_location_campaign]((sum(campaigns.type = 'DR' && transactions.effective_corrected_sales_quantity) > (1.0e - 06)) && (((sum(transactions.sales_quantity) || 0) - (sum(campaigns.type = 'DR' && transactions.effective_corrected_sales_quantity) || 0)) / sum(campaigns.type = 'DR' && transactions.effective_corrected_sales_quantity)))"
+       end; end;

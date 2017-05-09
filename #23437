@@ -1,0 +1,6 @@
+$ui_config.custom_extend(MetricRenderer) do
+group :test do |g|
+g.metric :customer_empty_shelves, "PDA tyhjät hyllynpaikat", :type => :quantity,
+        :tql => "sum(empty_shelves.customer_zero_balance) || 0"
+            end;
+end;

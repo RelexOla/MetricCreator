@@ -1,0 +1,44 @@
+begin_trx.cube
+    .slice(LocalDate.new('2016-09-20'),LocalDate.new('2016-09-25'))
+    .slice("products", "code == '20958478001'")
+    .slice("locations", "code == '300_1'")
+    .view("product_locations",
+          "
+$start
+
+as tql
+
+"
+    )
+.first.get_attribute("tql")
+
+å¨
+
+
+MetricRenderer.all_fields.select{ |f|
+    f.name == :customer_test_metric
+}.first.options[:tql] =   "sum(sales_forecasts_1.date < $start + 4 && sales_forecasts_1.quantity) || 0 + sum(sales_forecasts.date >= $start + 4 && sales_forecasts.additional_quantity) || 0"
+
+MetricRenderer.all_fields.select{ |f|
+    f.name == :customer_forecast_metric
+}.first.options[:tql] =   "period[$start, min($today + 3, $end)](sum(sales_forecasts_1.effective_quantity) || 0) + (period[max($today + 4, $start), $end](sum(sales_forecasts.effective_quantity) || 0))"
+
+
+ ""
+
+
+
+MetricRenderer.all_fields.select{ |f|
+    f.name == :customer_forecast_metric
+}.first.options[:tql] = "period[$start, min($start + 3, $end)](sum(sales_forecasts_1.effective_quantity)) || 0 + ($start + 3 <= $end && period[$start + 4, $end](sum(sales_forecasts.additional_quantity))) || 0"
+
+
+MetricRenderer.all_fields.select{ |f|
+    f.name == :customer_forecast_metric
+}.first.options[:tql] = "sum(sales_forecasts.date < ($start + 4) && sales_forecasts.effective_quantity) || 0 + sum(sales_forecasts.date >= ($start + 4) && sales_forecasts.additional_quantity) || 0"
+
+
+
+MetricRenderer.all_fields.select{ |f|
+    f.name == :customer_forecast_metric
+}.first.options[:tql] = "$start"

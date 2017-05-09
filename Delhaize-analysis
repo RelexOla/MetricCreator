@@ -1,0 +1,45 @@
+    duplicate_table(:sales_forecasts, :mean_forecasts_0,
+      "Mean forecasts (0)",
+      "Mean forecasts (0)",
+      "Mean forecasts (0)"
+    )
+
+    duplicate_table(:sales_forecasts, :mean_forecasts_1,
+      "Mean forecasts (1)",
+      "Mean forecasts (1)",
+      "Mean forecasts (1)"
+    )
+
+    duplicate_table(:sales_forecasts, :raw_forecasts_0,
+      "Raw forecasts (0)",
+      "Raw forecasts (0)",
+      "Raw forecasts (0)"
+    )
+
+    duplicate_table(:sales_forecasts, :raw_forecasts_1,
+      "Raw forecasts (1)",
+      "Raw forecasts (1)",
+      "Raw forecasts (1)"
+    )
+
+
+
+    duplicate_metrics(:forecast_metrics, :forecast_metrics_mean_0, N_("Mean Forecast metrics 0"), { :sales_forecasts => :mean_forecasts_0 })
+    duplicate_metrics(:forecast_metrics, :forecast_metrics_mean_1, N_("Mean Forecast metrics 1"), { :sales_forecasts => :mean_forecasts_1 })
+    duplicate_metrics(:forecast_metrics, :forecast_metrics_raw_0, N_("Raw Forecast metrics 0"), { :sales_forecasts => :raw_forecasts_0 })
+    duplicate_metrics(:forecast_metrics, :forecast_metrics_raw_1, N_("Raw Forecast metrics 1"), { :sales_forecasts => :raw_forecasts_1 })
+
+
+    run_after_initialization(:database) do
+      Trx.fresh do  # reader initialization requires a trx bound to thread :-/
+        @readers[:mean_forecasts_0] = TimeDependentGenericReader.new("mean_forecasts_0", processor_context.dao_dao, false, ["products.code", "locations.code"].to_java(:string))
+        @readers[:mean_forecasts_1] = TimeDependentGenericReader.new("mean_forecasts_1", processor_context.dao_dao, false, ["products.code", "locations.code"].to_java(:string))
+        @readers[:raw_forecasts_0] = TimeDependentGenericReader.new("raw_forecasts_0", processor_context.dao_dao, false, ["products.code", "locations.code"].to_java(:string))
+        @readers[:raw_forecasts_0] = TimeDependentGenericReader.new("raw_forecasts_0", processor_context.dao_dao, false, ["products.code", "locations.code"].to_java(:string))
+      end
+    end if Object.const_defined?(:NonUniqueTimeDependentGenericReader)
+
+
+
+1048078137_20;1048078137_10;1048078138_10;1048078138_20;1048078139_10;1048078139_20;1048078139_30;1048078139_40;1048078140_10;1048078140_20;1048078140_40;1048078140_40
+

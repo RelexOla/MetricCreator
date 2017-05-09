@@ -1,0 +1,20 @@
+remote: git command failed: 'git cherry-pick dc3154a9298c5b9fe0f9ea5f40eaf6b23c850b07'
+remote: Autopick FAILED: 'dc3154a9298c5b9fe0f9ea5f40eaf6b23c850b07' to '5.9-beta' in '/git/processor-edge_autocherrypick'! Do it manually.
+remote: --------------------------------------------------------------------------------
+remote: git command failed: 'git cherry-pick dc3154a9298c5b9fe0f9ea5f40eaf6b23c850b07'
+remote: Autopick FAILED: 'dc3154a9298c5b9fe0f9ea5f40eaf6b23c850b07' to '5.9W' in '/git/processor-edge_autocherrypick'! Do it manually.
+remote: --------------------------------------------------------------------------------
+remote: git command failed: 'git cherry-pick dc3154a9298c5b9fe0f9ea5f40eaf6b23c850b07'
+remote: Autopick FAILED: 'dc3154a9298c5b9fe0f9ea5f40eaf6b23c850b07' to 'rossmann-5.8-beta' in '/git/processor-edge_autocherrypick'! Do it manually.
+remote: --------------------------------------------------------------------------------
+remote: git command failed: 'git cherry-pick dc3154a9298c5b9fe0f9ea5f40eaf6b23c850b07'
+remote: Autopick FAILED: 'dc3154a9298c5b9fe0f9ea5f40eaf6b23c850b07' to '5.9' in '/git/processor-edge_autocherrypick'! Do it manually.
+remote: --------------------------------------------------------------------------------
+remote: git command failed: 'git cherry-pick dc3154a9298c5b9fe0f9ea5f40eaf6b23c850b07'
+remote: Autopick FAILED: 'dc3154a9298c5b9fe0f9ea5f40eaf6b23c850b07' to '5.8-beta' in '/git/processor-edge_autocherrypick'! Do it manually.
+remote: --------------------------------------------------------------------------------
+remote: git command failed: 'git cherry-pick dc3154a9298c5b9fe0f9ea5f40eaf6b23c850b07'
+remote: Autopick FAILED: 'dc3154a9298c5b9fe0f9ea5f40eaf6b23c850b07' to 'rossmann-5.8' in '/git/processor-edge_autocherrypick'! Do it manually.
+remote: --------------------------------------------------------------------------------
+remote: git command failed: 'git cherry-pick dc3154a9298c5b9fe0f9ea5f40eaf6b23c850b07'
+remote: Autopick FAILED: 'dc3154a9298c5b9fe0f9ea5f40eaf6b23c850b07' to '5.8' in '/git/processor-edge_autocherrypick'! Do it manually.

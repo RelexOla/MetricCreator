@@ -1,0 +1,3 @@
+OptimizationAction.where("parameters like '%?%'").map { |oa| oa.optimization_id }.uniq
+
+ids  = OptimizationAction.where("action == 'run_adapters'").map{ |oa| oa.optimization_id }.uniq

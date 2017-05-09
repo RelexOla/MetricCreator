@@ -1,7 +1,7 @@
 begin_trx.cube
     .slice(LocalDate.new.minusDays(3), LocalDate.new.minusDays(3))
-    .slice("products", "code = '0850044411' ")
-    .slice("locations", "code = '0188'")
+    .slice("products", "code = '20373718015' ")
+    .slice("locations", "code = '300_ELB'")
     .view("product_locations",
           "
 

@@ -1,0 +1,107 @@
+$ui_config.custom_extend(MetricRenderer) do
+    group :test do |g|
+            g.metric :customer_future_product_assortments_text, "Tulevat valikoimaluokat mittari text", :type => :text,
+                :tql => "
+                (products.customer_tuleva_ketjuvalikoimaluokka_ab ? products.customer_tuleva_ketjuvalikoimaluokka_ab + ' ' : '') +
+                (products.customer_tuleva_ketjuvalikoimaluokka_pm ? products.customer_tuleva_ketjuvalikoimaluokka_pm + ' ' : '') +
+                (products.customer_tuleva_ketjuvalikoimaluokka_pr ? products.customer_tuleva_ketjuvalikoimaluokka_pr + ' ' : '') +
+                (products.customer_tuleva_ketjuvalikoimaluokka_sm ? products.customer_tuleva_ketjuvalikoimaluokka_sm + ' ' : '') +
+                (products.customer_tuleva_ketjuvalikoimaluokka_sr ? products.customer_tuleva_ketjuvalikoimaluokka_sr + ' ' : '') +
+                (products.customer_tuleva_ketjuvalikoimaluokka_tr ? products.customer_tuleva_ketjuvalikoimaluokka_tr + ' ' : '') +
+                (products.customer_tuleva_tilausmyynti_ab_luokka ? products.customer_tuleva_tilausmyynti_ab_luokka + ' ' : '') +
+                (products.customer_tuleva_tilausmyynti_pm_luokka ? products.customer_tuleva_tilausmyynti_pm_luokka + ' ' : '') +
+                (products.customer_tuleva_tilausmyynti_pr_luokka ? products.customer_tuleva_tilausmyynti_pr_luokka + ' ' : '') +
+                (products.customer_tuleva_tilausmyynti_sm_luokka ? products.customer_tuleva_tilausmyynti_sm_luokka + ' ' : '') +
+                (products.customer_tuleva_tilausmyynti_sr_luokka ? products.customer_tuleva_tilausmyynti_sr_luokka + ' ' : '') +
+                (products.customer_tuleva_tilausmyynti_tr_luokka ? products.customer_tuleva_tilausmyynti_tr_luokka + ' ' : '') +
+                (products.customer_tuleva_kt_vaihtuva_ab_luokka ? products.customer_tuleva_kt_vaihtuva_ab_luokka + ' ' : '') +
+                (products.customer_tuleva_kt_vaihtuva_pm_luokka ? products.customer_tuleva_kt_vaihtuva_pm_luokka + ' ' : '') +
+                (products.customer_tuleva_kt_vaihtuva_pr_luokka ? products.customer_tuleva_kt_vaihtuva_pr_luokka + ' ' : '') +
+                (products.customer_tuleva_kt_vaihtuva_sm_luokka ? products.customer_tuleva_kt_vaihtuva_sm_luokka + ' ' : '') +
+                (products.customer_tuleva_kt_vaihtuva_sr_luokka ? products.customer_tuleva_kt_vaihtuva_sr_luokka + ' ' : '') +
+                (products.customer_tuleva_kt_vaihtuva_tr_luokka ? products.customer_tuleva_kt_vaihtuva_tr_luokka + ' ' : '') +
+                (products.customer_tuleva_lisavalikoima_ab_luokka ? products.customer_tuleva_lisavalikoima_ab_luokka + ' ' : '') +
+                (products.customer_tuleva_lisavalikoima_pm_luokka ? products.customer_tuleva_lisavalikoima_pm_luokka + ' ' : '') +
+                (products.customer_tuleva_lisavalikoima_pr_luokka ? products.customer_tuleva_lisavalikoima_pr_luokka + ' ' : '') +
+                (products.customer_tuleva_lisavalikoima_sm_luokka ? products.customer_tuleva_lisavalikoima_sm_luokka + ' ' : '') +
+                (products.customer_tuleva_lisavalikoima_sr_luokka ? products.customer_tuleva_lisavalikoima_sr_luokka + ' ' : '') +
+                (products.customer_tuleva_lisavalikoima_tr_luokka ? products.customer_tuleva_lisavalikoima_tr_luokka + ' ' : '')
+             "              end;
+
+    end;
+
+
+
+
+
+            g.metric :customer_(product_assortments, "Valikoimaluokat", :type => :string,
+               :tql => "
+                (products.customer_ketjuvalikoimaluokka_liikennemla ? products.customer_ketjuvalikoimaluokka_liikennemla + ' ' : '') +
+                (products.customer_ketjuvalikoimaluokka_marks_spencer ? products.customer_ketjuvalikoimaluokka_marks_spencer + ' ' : '') +
+                (products.customer_ketjuvalikoimaluokka_pienmla ? products.customer_ketjuvalikoimaluokka_pienmla + ' ' : '') +
+                (products.customer_ketjuvalikoimaluokka_prisma ? products.customer_ketjuvalikoimaluokka_prisma + ' ' : '') +
+                (products.customer_ketjuvalikoimaluokka_smarket ? products.customer_ketjuvalikoimaluokka_smarket + ' ' : '') +
+                (products.customer_ketjuvalikoimaluokka_srauta ? products.customer_ketjuvalikoimaluokka_srauta + ' ' : '') +
+                (products.customer_ketjuvalikoimaluokka_terra ? products.customer_ketjuvalikoimaluokka_terra + ' ' : '') +
+                (products.customer_tilausmyynti_ab_luokka ? products.customer_tilausmyynti_ab_luokka + ' ' : '') +
+                (products.customer_tilausmyynti_pm_luokka ? products.customer_tilausmyynti_pm_luokka + ' ' : '') +
+                (products.customer_tilausmyynti_pr_luokka ? products.customer_tilausmyynti_pr_luokka + ' ' : '') +
+                (products.customer_tilausmyynti_sm_luokka ? products.customer_tilausmyynti_sm_luokka + ' ' : '') +
+                (products.customer_tilausmyynti_sr_luokka ? products.customer_tilausmyynti_sr_luokka + ' ' : '') +
+                (products.customer_tilausmyynti_tr_luokka ? products.customer_tilausmyynti_tr_luokka + ' ' : '') +
+                (products.customer_kt_vaihtuva_ab_luokka ? products.customer_kt_vaihtuva_ab_luokka + ' ' : '') +
+                (products.customer_kt_vaihtuva_pm_luokka ? products.customer_kt_vaihtuva_pm_luokka + ' ' : '') +
+                (products.customer_kt_vaihtuva_pr_luokka ? products.customer_kt_vaihtuva_pr_luokka + ' ' : '') +
+                (products.customer_kt_vaihtuva_sm_luokka ? products.customer_kt_vaihtuva_sm_luokka + ' ' : '') +
+                (products.customer_kt_vaihtuva_sr_luokka ? products.customer_kt_vaihtuva_sr_luokka + ' ' : '') +
+                (products.customer_kt_vaihtuva_tr_luokka ? products.customer_kt_vaihtuva_tr_luokka + ' ' : '') +
+                (products.customer_lisavalikoima_ab_luokka ? products.customer_lisavalikoima_ab_luokka + ' ' : '') +
+                (products.customer_lisavalikoima_pm_luokka ? products.customer_lisavalikoima_pm_luokka + ' ' : '') +
+                (products.customer_lisavalikoima_pr_luokka ? products.customer_lisavalikoima_pr_luokka + ' ' : '') +
+                (products.customer_lisavalikoima_sm_luokka ? products.customer_lisavalikoima_sm_luokka + ' ' : '') +
+                (products.customer_lisavalikoima_sr_luokka ? products.customer_lisavalikoima_sr_luokka + ' ' : '') +
+                (products.customer_lisavalikoima_tr_luokka ? products.customer_lisavalikoima_tr_luokka + ' ' : '')
+            "
+            g.metric :customer_future_product_assortments, "Tulevat valikoimaluoka", :type => :string,
+                :tql => "
+                (products.customer_tuleva_ketjuvalikoimaluokka_ab ? products.customer_tuleva_ketjuvalikoimaluokka_ab + ' ' : '') +
+                (products.customer_tuleva_ketjuvalikoimaluokka_pm ? products.customer_tuleva_ketjuvalikoimaluokka_pm + ' ' : '') +
+                (products.customer_tuleva_ketjuvalikoimaluokka_pr ? products.customer_tuleva_ketjuvalikoimaluokka_pr + ' ' : '') +
+                (products.customer_tuleva_ketjuvalikoimaluokka_sm ? products.customer_tuleva_ketjuvalikoimaluokka_sm + ' ' : '') +
+                (products.customer_tuleva_ketjuvalikoimaluokka_sr ? products.customer_tuleva_ketjuvalikoimaluokka_sr + ' ' : '') +
+                (products.customer_tuleva_ketjuvalikoimaluokka_tr ? products.customer_tuleva_ketjuvalikoimaluokka_tr + ' ' : '') +
+                (products.customer_tuleva_tilausmyynti_ab_luokka ? products.customer_tuleva_tilausmyynti_ab_luokka + ' ' : '') +
+                (products.customer_tuleva_tilausmyynti_pm_luokka ? products.customer_tuleva_tilausmyynti_pm_luokka + ' ' : '') +
+                (products.customer_tuleva_tilausmyynti_pr_luokka ? products.customer_tuleva_tilausmyynti_pr_luokka + ' ' : '') +
+                (products.customer_tuleva_tilausmyynti_sm_luokka ? products.customer_tuleva_tilausmyynti_sm_luokka + ' ' : '') +
+                (products.customer_tuleva_tilausmyynti_sr_luokka ? products.customer_tuleva_tilausmyynti_sr_luokka + ' ' : '') +
+                (products.customer_tuleva_tilausmyynti_tr_luokka ? products.customer_tuleva_tilausmyynti_tr_luokka + ' ' : '') +
+                (products.customer_tuleva_kt_vaihtuva_ab_luokka ? products.customer_tuleva_kt_vaihtuva_ab_luokka + ' ' : '') +
+                (products.customer_tuleva_kt_vaihtuva_pm_luokka ? products.customer_tuleva_kt_vaihtuva_pm_luokka + ' ' : '') +
+                (products.customer_tuleva_kt_vaihtuva_pr_luokka ? products.customer_tuleva_kt_vaihtuva_pr_luokka + ' ' : '') +
+                (products.customer_tuleva_kt_vaihtuva_sm_luokka ? products.customer_tuleva_kt_vaihtuva_sm_luokka + ' ' : '') +
+                (products.customer_tuleva_kt_vaihtuva_sr_luokka ? products.customer_tuleva_kt_vaihtuva_sr_luokka + ' ' : '') +
+                (products.customer_tuleva_kt_vaihtuva_tr_luokka ? products.customer_tuleva_kt_vaihtuva_tr_luokka + ' ' : '') +
+                (products.customer_tuleva_lisavalikoima_ab_luokka ? products.customer_tuleva_lisavalikoima_ab_luokka + ' ' : '') +
+                (products.customer_tuleva_lisavalikoima_pm_luokka ? products.customer_tuleva_lisavalikoima_pm_luokka + ' ' : '') +
+                (products.customer_tuleva_lisavalikoima_pr_luokka ? products.customer_tuleva_lisavalikoima_pr_luokka + ' ' : '') +
+                (products.customer_tuleva_lisavalikoima_sm_luokka ? products.customer_tuleva_lisavalikoima_sm_luokka + ' ' : '') +
+                (products.customer_tuleva_lisavalikoima_sr_luokka ? products.customer_tuleva_lisavalikoima_sr_luokka + ' ' : '') +
+                (products.customer_tuleva_lisavalikoima_tr_luokka ? products.customer_tuleva_lisavalikoima_tr_luokka + ' ' : '')
+             "
+            g.metric :customer_(product_location_assortments, "Ketjun valikoimaluokat", :type => :string,
+                :tql => "
+                (product_locations.customer_ketjuvalikoimaluokka ? product_locations.customer_ketjuvalikoimaluokka + ' ' : '') +
+                (product_locations.customer_tilausmyynti_tl_luokka ? product_locations.customer_tilausmyynti_tl_luokka + ' ' : '') +
+                (product_locations.customer_kt_vaihtuva_tl_luokka ? product_locations.customer_kt_vaihtuva_tl_luokka + ' ' : '') +
+                (product_locations.customer_lisavalikoima_tl_luokka ? product_locations.customer_lisavalikoima_tl_luokka + ' ' : '')
+                "
+            g.metric :customer_future_(product_location_assortments, "Ketjun tulevat valikoimaluokat", :type => :string,
+                :tql => "
+                (product_locations.customer_tuleva_ketjuvalikoimaluokka ? product_locations.customer_tuleva_ketjuvalikoimaluokka + ' ' : '') +
+                (product_locations.customer_tuleva_tilausmyynti_tl_luokka ? product_locations.customer_tuleva_tilausmyynti_tl_luokka + ' ' : '') +
+                (product_locations.customer_tuleva_kt_vaihtuva_tl_luokka ? product_locations.customer_tuleva_kt_vaihtuva_tl_luokka + ' ' : '') +
+                (product_locations.customer_tuleva_lisavalikoima_tl_luokka ? product_locations.customer_tuleva_lisavalikoima_tl_luokka + ' ' : '')
+                "
+
+

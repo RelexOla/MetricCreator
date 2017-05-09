@@ -1,0 +1,14 @@
+        products.customer_tilausmyynti_ab_luokka ? customer_tilausmyynti_ab_luokka + ' ' : '' +
+        products.customer_tilausmyynti_pm_luokka ? customer_tilausmyynti_pm_luokka + ' ' : '' +
+        products.customer_tilausmyynti_pr_luokka ? customer_tilausmyynti_pr_luokka + ' ' : '' +
+        products.customer_tilausmyynti_sm_luokka ? customer_tilausmyynti_sm_luokka + ' ' : '' +
+        products.customer_tilausmyynti_sr_luokka ? customer_tilausmyynti_sr_luokka + ' ' : '' +
+        products.customer_tilausmyynti_tr_luokka ? customer_tilausmyynti_tr_luokka + ' ' : '' +
+
+        products.customer_tuleva_tilausmyynti_ab_luokka ? customer_tuleva_tilausmyynti_ab_luokka + ' ' : '' +
+        products.customer_tuleva_tilausmyynti_pm_luokka ? customer_tuleva_tilausmyynti_pm_luokka + ' ' : '' +
+        products.customer_tuleva_tilausmyynti_pr_luokka ? customer_tuleva_tilausmyynti_pr_luokka + ' ' : '' +
+        products.customer_tuleva_tilausmyynti_sm_loppupvm ? customer_tuleva_tilausmyynti_sm_loppupvm + ' ' : '' +
+        products.customer_tuleva_tilausmyynti_sr_luokka ? customer_tuleva_tilausmyynti_sr_luokka + ' ' : '' +
+        products.customer_tuleva_tilausmyynti_tr_luokka ? customer_tuleva_tilausmyynti_tr_luokka + ' ' : '' +
+

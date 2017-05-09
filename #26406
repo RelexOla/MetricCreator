@@ -1,0 +1,20 @@
+begin_trx.cube
+    .slice(LocalDate.new.minusDays(0), LocalDate.new.plusDays(5))
+    .slice("products", "code = '0850044411' ")
+    .slice("chains", "code = 'PRISMA'")
+    .view("product_locations",
+          "
+
+sum(simulated_values.delivered_orders_quantity) - period[$today, $today](sum(order_proposals.delivery_date >= $parent_start && order_proposals.delivery_date <= $parent_end && order_proposals.effective_quantity))
+
+as tql"
+    )
+    .first.get_attribute("tql")
+
+
+
+
+
+
+    g.metric :customer_test_metric_ola_1, "Delivery forecast - todays proposals",
+    :tql => "sum(simulated_values.delivered_orders_quantity) - period[$today, $today](sum(order_proposals.delivery_date >= $parent_start && order_proposals.delivery_date <= $parent_end && order_proposals.effective_quantity))"

@@ -1,0 +1,177 @@
+customer.instance.domain=localhost:16944/processor-sok-kt
+server.url=relex-kt-market.sok.fi
+/opt/apps/processor-sok-kt/scripts
+ftp.fs.fsinput.password=DumJogwon2
+ftp.fs.fetch.checker.time=90
+ftp.fs.fetch.checker.recipients=monitoring@relex.fi
+ftp.fs.fetch.checker.on=false
+httpStatusChecker.email=support@relex.fi,ola.lansman@relexsolutions.com,leena.lintunen@relexsolutions.com
+email.to.lukaWaitingTimeExceeded=markus.tyni@relexsolutions.com;leena.lintunen@relexsolutions.com,topsi_tavhal.in@capgemini.com
+
+#Daily balances
+ctx.saldot.dac.action=WAIT
+ctx.saldot.dac.protocol=FILE
+ctx.saldot.dac.host=/
+ctx.saldot.dac.input=/opt/apps/processor-sok-kt/shared/customer/input/
+ctx.saldot.dac.patterns=2:Saldo_.*
+ctx.saldot.dac.retry.sleep=PT60S
+ctx.saldot.dac.retry.until=04:00
+ctx.saldot.dac.retry.interval=CONSTANT
+
+#Daily open orders
+ctx.avoimet.dac.action=WAIT
+ctx.avoimet.dac.protocol=FILE
+ctx.avoimet.dac.host=/
+ctx.avoimet.dac.input=/opt/apps/processor-sok-kt/shared/customer/input/
+ctx.avoimet.dac.patterns=MARTTIAVOINOSTO.MARTTI.KTRELEX.*
+ctx.avoimet.dac.retry.sleep=PT60S
+ctx.avoimet.dac.retry.until=04:00
+ctx.avoimet.dac.retry.interval=CONSTANT
+
+#Daily calendar group
+ctx.kalenteriryhma.dac.action=WAIT
+ctx.kalenteriryhma.dac.protocol=FILE
+ctx.kalenteriryhma.dac.host=/
+ctx.kalenteriryhma.dac.input=/opt/apps/processor-sok-kt/shared/data/messages/input
+ctx.kalenteriryhma.dac.patterns=Delivery_Calendar_Group_Update_.*
+ctx.kalenteriryhma.dac.retry.sleep=PT30S
+ctx.kalenteriryhma.dac.retry.times=5
+ctx.kalenteriryhma.dac.retry.interval=CONSTANT
+
+#Daily order calendar
+ctx.toimituskalenteri.dac.action=WAIT
+ctx.toimituskalenteri.dac.protocol=FILE
+ctx.toimituskalenteri.dac.host=/
+ctx.toimituskalenteri.dac.input=/opt/apps/processor-sok-kt/shared/data/messages/input
+ctx.toimituskalenteri.dac.patterns=Delivery_Schedule_Update_Toimituskalenteri_.*
+ctx.toimituskalenteri.dac.retry.sleep=PT30S
+ctx.toimituskalenteri.dac.retry.times=5
+ctx.toimituskalenteri.dac.retry.interval=CONSTANT
+
+#Weekly balances
+ctx.lauantaisaldot.dac.action=WAIT
+ctx.lauantaisaldot.dac.protocol=FILE
+ctx.lauantaisaldot.dac.host=/
+ctx.lauantaisaldot.dac.input=/opt/apps/processor-sok-kt-test/shared/customer/input
+ctx.lauantaisaldot.dac.patterns=Saldo.*
+ctx.lauantaisaldot.dac.retry.sleep=PT30S
+ctx.lauantaisaldot.dac.retry.times=3
+ctx.lauantaisaldot.dac.retry.interval=CONSTANT
+
+#Daily R2R SV --> KT products
+ctx.SV2MarketProduct.dac.action=GET
+ctx.SV2MarketProduct.dac.protocol=FTP
+ctx.SV2MarketProduct.dac.host=localhost
+ctx.SV2MarketProduct.dac.username=relex2relex
+ctx.SV2MarketProduct.dac.password=WaptyupKu
+ctx.SV2MarketProduct.dac.input=data/relex2relex
+ctx.SV2MarketProduct.dac.patterns=Product_Update_wip._*.csv
+ctx.SV2MarketProduct.dac.retry.times=1
+
+#Daily R2R KT --> SV products
+ctx.Market2SVproduct.dac.action=SEND
+ctx.Market2SVproduct.dac.protocol=FTP
+ctx.Market2SVproduct.dac.host=localhost
+ctx.Market2SVproduct.dac.username=relex2relex
+ctx.Market2SVproduct.dac.password=WaptyupKu
+ctx.Market2SVproduct.dac.input=/opt/apps/processor-sok-kt-test/shared/data/output
+ctx.Market2SVproduct.dac.output=data/relex2relex/sokkt2inexkt
+ctx.Market2SVproduct.dac.patterns=Product_Update_Tilaustarve_2.*csv
+ctx.Market2SVproduct.dac.retry.times=1
+
+#Daily R2R KT --> SV replacements
+ctx.Market2SVreplacement.dac.action=SEND
+ctx.Market2SVreplacement.dac.protocol=FTP
+ctx.Market2SVreplacement.dac.host=localhost
+ctx.Market2SVreplacement.dac.username=relex2relex
+ctx.Market2SVreplacement.dac.password=WaptyupKu
+ctx.Market2SVreplacement.dac.input=/opt/apps/processor-sok-kt-test/shared/data/output
+ctx.Market2SVreplacement.dac.output=data/relex2relex
+ctx.Market2SVreplacement.dac.patterns=Manual_Product_Replacement_Update_Marttituotesuhde.*.csv
+ctx.Market2SVreplacement.dac.retry.times=1
+
+#Daily R2R KT --> SV forecasts
+ctx.Market2SVforecasts.dac.action=SEND
+ctx.Market2SVforecasts.dac.protocol=FTP
+ctx.Market2SVforecasts.dac.host=localhost
+ctx.Market2SVforecasts.dac.username=relex2relex
+ctx.Market2SVforecasts.dac.password=WaptyupKu
+ctx.Market2SVforecasts.dac.input=/opt/apps/processor-sok-kt-test/shared/data/output
+ctx.Market2SVforecasts.dac.output=data/relex2relex
+ctx.Market2SVforecasts.dac.patterns=Sales_Forecast_Update_simulated_deliveries_.*.csv
+ctx.Market2SVforecasts.dac.retry.times=1
+
+#Daily R2R KT --> SV product groups
+ctx.Market2SVtuoteryhma.dac.action=SEND
+ctx.Market2SVtuoteryhma.dac.protocol=FTP
+ctx.Market2SVtuoteryhma.dac.host=localhost
+ctx.Market2SVtuoteryhma.dac.username=relex2relex
+ctx.Market2SVtuoteryhma.dac.password=WaptyupKu
+ctx.Market2SVtuoteryhma.dac.input=/opt/apps/processor-sok-kt-test/shared/data/output
+ctx.Market2SVtuoteryhma.dac.output=data/relex2relex
+ctx.Market2SVtuoteryhma.dac.patterns=Product_Update_sokkt_ph1_.*.csv
+ctx.Market2SVtuoteryhma.dac.retry.times=1
+
+#Daily R2R KT --> SV esillepano
+ctx.Market2SVesillepano.dac.action=SEND
+ctx.Market2SVesillepano.dac.protocol=FTP
+ctx.Market2SVesillepano.dac.host=localhost
+ctx.Market2SVesillepano.dac.username=relex2relex
+ctx.Market2SVesillepano.dac.password=WaptyupKu
+ctx.Market2SVesillepano.dac.input=/opt/apps/processor-sok-kt-test/shared/data/output
+ctx.Market2SVesillepano.dac.output=data/relex2relex
+ctx.Market2SVesillepano.dac.patterns=Product_Update_sokkt_epr1_8.*.csv
+ctx.Market2SVesillepano.dac.retry.times=1
+
+#Daily R2R SV --> KT Availability storage balances waiter
+ctx.SV2MarketOdotaSaldot.dac.action=WAIT
+ctx.SV2MarketOdotaSaldot.dac.protocol=FTP
+ctx.SV2MarketOdotaSaldot.dac.host=localhost
+ctx.SV2MarketOdotaSaldot.dac.username=relex2relex
+ctx.SV2MarketOdotaSaldot.dac.password=WaptyupKu
+ctx.SV2MarketOdotaSaldot.dac.input=data/relex2relex/inexkt2sokkt
+ctx.SV2MarketOdotaSaldot.dac.patterns=input.*STC.*txt.csv
+ctx.SV2MarketOdotaSaldot.dac.until=10:00
+
+#Daily R2R SV --> KT Availability storage balances fetcher
+ctx.SV2MarketHaeSaldot.dac.action=GET
+ctx.SV2MarketHaeSaldot.dac.protocol=FTP
+ctx.SV2MarketHaeSaldot.dac.host=localhost
+ctx.SV2MarketHaeSaldot.dac.username=relex2relex
+ctx.SV2MarketHaeSaldot.dac.password=WaptyupKu
+ctx.SV2MarketHaeSaldot.dac.input=data/relex2relex/inexkt2sokkt
+ctx.SV2MarketHaeSaldot.dac.output=/opt/apps/processor-sok-kt-test/shared/customer/input
+ctx.SV2MarketHaeSaldot.dac.patterns=input.*STC.*txt.csv
+ctx.SV2MarketHaeSaldot.dac.retry.times=1
+
+#Daily R2R SV --> KT ProdLoc-balances
+ctx.SV2MarketHaeLokaatio.dac.action=GET
+ctx.SV2MarketHaeLokaatio.dac.protocol=FTP
+ctx.SV2MarketHaeLokaatio.dac.host=localhost
+ctx.SV2MarketHaeLokaatio.dac.username=relex2relex
+ctx.SV2MarketHaeLokaatio.dac.password=WaptyupKu
+ctx.SV2MarketHaeLokaatio.dac.input=data/relex2relex/inexkt2sokkt
+ctx.SV2MarketHaeLokaatio.dac.output=/opt/apps/processor-sok-kt-test/shared/data/original
+ctx.SV2MarketHaeLokaatio.dac.patterns=Product_Location_Update.*STC.*txt.csv
+ctx.SV2MarketHaeLokaatio.dac.retry.times=1
+
+#Daily R2R KT --> SV Ulosmyynnit
+ctx.Market2SVUlosmyynnit.dac.action=SEND
+ctx.Market2SVUlosmyynnit.dac.protocol=FTP
+ctx.Market2SVUlosmyynnit.dac.host=localhost
+ctx.Market2SVUlosmyynnit.dac.username=relex2relex
+ctx.Market2SVUlosmyynnit.dac.password=WaptyupKu
+ctx.Market2SVUlosmyynnit.dac.output=data/relex2relex
+ctx.Market2SVUlosmyynnit.dac.input=/opt/apps/processor-sok-kt-test/shared/data/output
+ctx.Market2SVUlosmyynnit.dac.patterns=Product_Chain_Day_level_sales_weekly_w.*.csv
+ctx.Market2SVUlosmyynnit.dac.retry.times=1
+
+#Not used yet
+ctx.lauantaienarit.dac.action=WAIT
+ctx.lauantaienarit.dac.protocol=FILE
+ctx.lauantaienarit.dac.host=/
+ctx.lauantaienarit.dac.input=/opt/apps/processor-sok-kt-test/shared/customer/input
+ctx.lauantaienarit.dac.patterns=MyyntiEAN_$yyyyMMdd$_1.*.csv
+ctx.lauantaienarit.dac.retry.sleep=PT30S
+ctx.lauantaienarit.dac.retry.times=1
+ctx.lauantaienarit.dac.retry.interval=CONSTANT
