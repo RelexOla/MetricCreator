@@ -1,1 +1,59 @@
-SELECT mi.TUOTEAVAIN as product, org.MORMAID as location, SUBSTR(mi.KIRJAUSAIKA,1,10) as date, SUBSTR(mi.KIRJAUSAIKA,12,14) as impulse_time, mi.TYYPPITUNNUS as impulse_type, mi.IMPULSSIID as "code:additional_key", mi.LISATIEDONARVO as impulse FROM RELEX.MARTTIMYYMALAIMPULSSI as mi INNER JOIN RELEX.MARTTIORGANISAATIO as org ON mi.MARTTIKYID = org.MARTTIID WHERE IMPULSSINAIKA > current date - 7 days AND mi.TYYPPITUNNUS in ('EP1', 'EP2', 'EP3', 'TP1', 'TP2', 'TP3', 'TP4');
+$write_trx = begin_trx;
+$stop.set(1) rescue nil;
+cbe = org.codehaus.janino.ClassBodyEvaluator.new;
+cbe.setClassName('RowCopier');
+cbe.cook('
+import java.lang.Math;
+import java.lang.Runtime;
+import java.util.concurrent.atomic.AtomicLong;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import fi.relex.processor2.fastorm.cube.Cube;
+import fi.relex.processor2.fastorm.cube.CubeView;
+import fi.relex.processor2.fastorm.Row;
+import fi.relex.processor2.fastorm.Table;
+import fi.relex.processor2.fastorm.Trx;
+
+    public static Logger logger = LogManager.getLogger(Cube.class);
+    public long copyRows(final Table fromTable, final Table toTable, final AtomicLong stop) {
+        final Cube fromCube = fromTable.getTransaction().cube();
+        final String fromTableName = fromTable.getName();
+        final String toTableName = toTable.getName();
+        final AtomicLong insertCount = new AtomicLong();
+        logger.info("Fetching cube view data...");
+        final long totalRows = fromCube.view(fromTableName).size();
+        CubeView rows = fromCube.view(fromTableName);
+        rows.parallelProcessRows(rows.new CubeViewProcessor("RowInserter") {
+            public void process(Row oldRow) {
+            if (stop.get() != 0) {
+                    logger.info("Run stopped!");
+                throw new RuntimeException("Run stopped!");
+                }
+
+                Row row = new Row(toTableName);
+                row.setAttribute("product_location_id", oldRow.getAttribute("product_location_id"));
+                row.setAttribute("delivery_schedule_id", oldRow.getAttribute("delivery_schedule_id"));
+                toTable.insert(row);
+                insertCount.incrementAndGet();
+
+                long inserts = insertCount.get();
+                if ((inserts % 10000) == 0) {
+                    long free_m = Runtime.getRuntime().freeMemory() / 1024 / 1024;
+                    long total_m = Runtime.getRuntime().totalMemory() / 1024 / 1024;
+                    logger.info(inserts + " / " + totalRows + " (" + (Math.round(inserts * 1000.0 / totalRows) / 10.0) + "%) " +
+                                ", free mem: " + free_m + "M / " + total_m + "M");
+                }
+            }
+        });
+        return insertCount.get();
+    }
+');
+$stop = AtomicLong.new;
+row_copier = cbe.getClazz;
+Job.start('copy_rows', "Copy rows") do;
+  $stop.set(0);
+  Rails.logger.info("Copying rows...");
+  count = row_copier.new_instance.copy_rows($read_trx.get_table("product_location_delivery_schedules"), $write_trx.get_table("product_location_delivery_schedules"), $stop);
+  Rails.logger.info("  -> #{count} inserted");
+end;
+
