@@ -1,0 +1,79 @@
+1. Remove the group-location tables that will be created in 6.0 deploy
+
+begin_trx;
+    Trx.current.drop_table(:group3_locations_assortments);
+    Trx.current.drop_table(:group_1_locations);
+   Trx.current.drop_table(:group_2_locations);
+   Trx.current.drop_table(:group_3_locations);
+   Trx.current.drop_table(:group3_locations);
+   Trx.current.drop_table(:group_4_locations);
+commit;
+
+2. Deploy 6.0 Customer Config to make sure the tables won't be recreated
+
+3. Deploy Relex v. 6.0
+
+4. Read in the exported data
+
+5. Fix Search criteria and Report values
+
+begin_trx;
+SearchCriterion.where("target like '%group3_locations_assortment%'").all.each
+{|s|
+    new_target = s.target.sub!('group3_locations_assortment', 'group_3_locations_assortments');
+    s.target = new_target;
+    s.save;
+};
+commit;
+
+begin_trx;
+ReportValue.where("target like '%group3_locations_assortment%'").all.each
+{|s|
+    new_target = s.target.sub!('group3_locations_assortment', 'group_3_locations_assortments');
+    s.target = new_target;
+    s.save;
+};
+commit;
+
+begin_trx;
+ReportValue.where("target like '%group_4_location:%'").all.each
+{|s|
+    new_target = s.target.sub!('group_4_location:', 'group_4_locations:');
+    s.target = new_target;
+    s.save;
+};
+commit;
+
+ReportValue.where("target like '%group_2_location:%'").all.each
+{|s|
+    new_target = s.target.sub!('group_2_location:', 'group_2_locations:');
+    s.target = new_target;
+    s.save;
+};
+commit;
+
+ReportValue.where("target like '%group3_location:%'").all.each
+{|s|
+    new_target = s.target.sub!('group3_location:', 'group_3_locations:');
+    s.target = new_target;
+    s.save;
+};
+commit;
+
+
+
+
+
+
+
+begin_trx;
+
+OptimizationAction.where("parameters like '%group3_location%'").each { |oa| ;
+    oa_parameters = oa.parameters;
+    oa_parameters[:parameters].sub!('group3_location','group_3_locations') ;
+    oa.parameters = oa_parameters;
+oa.save;
+};
+commit;
+
+6709

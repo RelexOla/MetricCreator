@@ -1,0 +1,9 @@
+
+// Convert number to date
+Fastorm::Database.dateNumberToDate(5071)
+
+//Convert date to number
+Fastorm::Database.dateToDateNumber(Fastorm::LocalDate.parse('2017-06-25'))
+
+// Convert timestamp to datenumber
+floor(product_locations.created_at / 86400000) - 10957

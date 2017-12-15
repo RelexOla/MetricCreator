@@ -1,0 +1,1 @@
+begin_trx; ScheduledJob.where("job_type='VIEW_EXPORT'").all.update("emails", "ola.lansman@relexsolutions.com") ;commit

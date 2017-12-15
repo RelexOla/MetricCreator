@@ -1,0 +1,7 @@
+$ui_config.     custom_renderer(:product_location_delivery_schedules) do     renders :product_location_delivery_schedules, "Kalenterit", "Kalenteri" end;  $ui_config.custom_extend(Dimension) do self.add_dimension(DatabaseDimension.new(:product_location_delivery_schedules, "Tuote-lokaatio-kalenterit", lambda { "Waap" }, :identified_by => :product_location_id)) end;
+                 FastormDb.database.soft_cache.clear
+
+
+
+
+$ui_config.custom_extend(Dimension) do self.add_dimension(DatabaseDimension.new(:group_2_financial_plannings, "Class financial planning", lambda { "Waap" })) end

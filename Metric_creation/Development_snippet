@@ -1,23 +1,21 @@
 begin_trx.cube
-    .slice( LocalDate.new('2017-05-23'),  LocalDate.new('2017-05-23'))
-    .slice("products", "code = '02HQ13GF2HLPAC1G' ")
-    .slice("locations", "code = '18623'")
-    .view("order_parameters",
+    .view("product_locations",
           "
-period[order_parameters.date, order_parameters.date](level[user,product_locations](sum(campaigns.start_date <= $parent_start && campaigns.end_date >= $parent_end && product_location_campaigns.customer_esillepanon_maara)))
-
+distinct(product_locations.customer_seff_intro_date)
 as tql"
     )
     .first.get_attribute("tql")
 
 begin_trx.cube
-    .slice( LocalDate.new('2017-05-21'),  LocalDate.new('2017-05-24'))
-    .slice("products", "code = '02HQ13GF2HLPAC1G' ")
-    .slice("locations", "code = '18623'")
-    .view("order_parameters",
+    .slice("products", "code = 'delete_me' ")
+    .slice("locations", "code = 'TUKKU'")
+    .view("product_locations",
           "
-period[order_parameters.date, order_parameters.date](level[user,product_locations]($parent_end ))
-
+    timestamptostring(max(min(product_locations.allocation_delivery_date) * 86400000, 0))
 as tql"
     )
     .first.get_attribute("tql")
+
+    1000 * 60 * 60 * 24
+
+    min(product_locations.allocation_delivery_date

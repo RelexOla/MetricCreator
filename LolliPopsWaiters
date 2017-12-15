@@ -1,0 +1,22 @@
+
+begin_trx;
+OptimizationAction.where("parameters like '%Transaction_Update_InvTrans_%'").each { |oa| ;
+    oa_parameters = oa.parameters;
+    oa_parameters[:parameters].sub!('Transaction_Update_InvTrans_','Transaction_Update_Relex-InvTrans_') ;
+    oa.parameters = oa_parameters;
+oa.save;
+};
+commit;
+
+$yyyy-MM-dd$
+
+
+
+begin_trx;
+OptimizationAction.where("parameters like '%$yyyy-MM-dd$%'").each { |oa| ;
+    oa_parameters = oa.parameters;
+    oa_parameters[:parameters].sub!('$-1:yyyy-MM-dd$','$yyyy-MM-dd$') ;
+    oa.parameters = oa_parameters;
+oa.save;
+};
+commit;

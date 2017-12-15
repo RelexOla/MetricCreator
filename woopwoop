@@ -1,8 +1,0 @@
-ctx.tuotesuhde.dac.action=WAIT
-ctx.tuotesuhde.dac.protocol=FILE
-ctx.tuotesuhde.dac.host=/
-ctx.tuotesuhde.dac.input=/opt/apps/processor-sok-kt-test/shared/customer/input/
-ctx.tuotesuhde.dac.patterns=MARTTITUOTESUHDE.MARTTI.KTRELEX.*
-ctx.tuotesuhde.dac.retry.sleep=PT60S
-ctx.tuotesuhde.dac.retry.until=00:01
-ctx.tuotesuhde.dac.retry.interval=CONSTANT

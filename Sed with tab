@@ -1,0 +1,1 @@
+sed -i '' -e $'s/;/\t/g' /Users/Ola/workprojects/customer-modules/adapters/src/lollipops/test/resources/fi/relex/customer/lollipops/*txtsed -i '' -e $'s/;/\t/g' /Users/Ola/workprojects/customer-modules/adapters/src/lollipops/test/resources/fi/relex/customer/lollipops/*txt

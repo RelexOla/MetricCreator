@@ -1,0 +1,3 @@
+
+$ui_config.customer_adapters['fi.relex.customer.lollipops.LolliPopsWeeklyParametersWriterMain'] = { :title => 'LolliPopsWeeklyParametersWriterMain' };
+FastormDb.database.soft_cache.clear

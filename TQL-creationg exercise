@@ -1,0 +1,10 @@
+TQL-creating workflow
+Define what you want your TQL to do
+Develop you formula for single object from console using development snippet
+Validate for all objects using 'Set parameter value' -action ( for complex formulas, you can validate with excel )
+If any corner cases are found, go back to step 2. using that data.
+Your TQL is done – enjoy!
+
+Exercise 1 - Easy: Recreation of Calculated forecast -metric
+Step 1
+Calculated forecasts -metric sums campaign addition and forecasted quantity to show the total of calculated forecast. It will

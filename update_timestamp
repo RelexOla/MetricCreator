@@ -1,0 +1,2 @@
+timestamp = Fastorm::DateTime.new(1505748159577)
+OrderProposal.where("send_run_id ==  xxx ").all.update("sent_at", timestamp)

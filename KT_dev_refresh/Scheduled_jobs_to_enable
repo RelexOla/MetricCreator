@@ -1,0 +1,2 @@
+scheduled_jobs = ['Illan optimoinnit', 'EP enne ennustelaskentaa', 'EP ennen tilausehdotuslaskentaa', 'Poisto-optimoinnit', 'Saatavuusvaraston parametrien', 'Staging-kanta', 'EP-tilausehdotuslaskennan jälkeen', 'Valikoimatietoja hyödyntävät optimoinnit', 'Staging-kanta tilausluokka', 'Yöajo' ]
+scheduled_jobs.each { |job| ScheduledJob.where("name like '%#{job}%'").all.update("enabled", true) }

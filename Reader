@@ -1,0 +1,34 @@
+$ui_config.readers[:product_location_delivery_schedule_manual_readers] = GenericReader.new("product_location_delivery_schedules", processor_context.dao_dao, ["products.code", "locations.code", "delivery_schedules.code"].to_java(:string), nil, ["products.code", "locations.code", "delivery_schedules.code"].to_java(:string), true, 'product_locations');
+$ui_config.extra_reader_names[:product_location_delivery_schedules] = ['product_location_delivery_schedule_manual_readers']
+
+     @readers[:product_location_delivery_schedule_woops] = GenericReader.new("product_location_delivery_schedules", processor_context.dao_dao, ["products.code", "locations.code", "delivery_schedules.code"].to_java(:string), nil, ["products.code", "locations.code", "delivery_schedules.code"].to_java(:string))
+
+FastormDb.database.get_snapshot(1494945311812).begin_transaction.bind_to_thread
+
+
+
+
+$ui_config.readers[:group_3_locations_assortments_additonal_reader] = TimeDependentGenericReader.new("group_3_locations_assortments", dao_dao, false, ["groups_3.code", "locations.code"].to_java(:string));
+$ui_config.extra_reader_names[:group_3_locations_assortments] = ['group_3_locations_assortments_additonal_reader'];
+
+        @readers[:"group3_locations"] = GenericReader.new("group3_locations", processor_context.dao_dao, nil, nil, ["groups_3.code", "locations.code"].to_java(:string))
+
+
+
+$ui_config.custom_report_actions = [ { :name => :custom_export,:row_dimension => :product_locations,:title => 'Send orders custom action',:post_export_hook => :send_orders,:export_options => {:run_export => false, :use_working_copy => false}}];
+FastormDb.database.soft_cache.clear
+
+
+========= How to get around messages tab reader "error schema changed" ============
+
+def clear_reader_cache(reader);
+    f=$ui_config.readers[reader].java_class.superclass.superclass.declared_field 'cachedAllActualFields';
+    f.accessible = true;
+    f.set_value $ui_config.readers[reader], nil;
+end;
+
+
+@readers［:transactions］ = TimeDependentGenericReader.new("transactions_manual", dao_dao, false, ［product_locations.］.to_java(:string))
+$ui_config.readers[:transaction_manuals] = TimeDependentGenericReader.new("transactions", dao_dao, false, ["product_locations.customer_upc_code"].to_java(:string))
+$ui_config.extra_reader_names[:transactions] = ['transaction_manuals']
+

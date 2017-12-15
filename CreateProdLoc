@@ -1,0 +1,8 @@
+ ProductLocation.create(product_id:236223232931, location_id:1206, forecast_consumption_type:'NONE', delivery_time:'SEVEN_DAYS_WEEK', delivery_schedule:'EVERY_WEEK', count_initial_replenishments_towards_min_delivery:0, assortment_mode:'YES')
+
+     @default_values={
+         :product_locations => {
+             :customer_tilaustapa => "2",
+             :customer_martti_saldopaikka => 0,
+             :mrp_allow_negative_balance => true
+         }

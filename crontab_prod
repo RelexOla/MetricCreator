@@ -1,0 +1,64 @@
+PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/home/relex/bin:/sbin:/usr/sbin:/sbin:/usr/sbin:/sbin:/usr/sbin
+MAILTO="support.cron@relex.fi"
+MAILFROM='processor@relex.fi'
+GENERIC_CHECKUPRUN='java -Dxml_file=file:///opt/apps/processor-sok-kt/shared/customer/checker.config -cp /opt/apps/processor-sok-kt/shared/customer/customer.jar fi.relex.customer.GenericCheckupRun'
+
+# Delete old PostgreSQL log files
+00 19 * * * sudo find /home/relexapp/data/pg_log/ -name 'postgresql*.log*' -type f -mtime +5 -exec rm -f {} \;
+
+* * * * * LANG=en_US.UTF-8 /usr/bin/locale > /home/relex/locale.txt
+
+########################
+#  SOK KT New version  #
+########################
+
+00 20 * * * sh /opt/apps/processor-sok-kt/scripts/copy_data.sh
+40 23 * * * sh /opt/apps/processor-sok-kt/scripts/copy_data.sh
+*/5 * * * * sh /opt/apps/processor-sok-kt/scripts/sok_kt_martti_move_files_to_output.sh
+
+00 18 * * * sudo /sbin/service processor-sok-kt restart
+30 18 * * * sudo /sbin/service processor-sok-kt start
+
+# # RELEX CHECKERS
+00 07 * * * ${GENERIC_CHECKUPRUN} logs internal_contacts
+01 08 * * 1 ${GENERIC_CHECKUPRUN} frid internal_contacts
+
+*/10 20-23,0-18 * * * java -cp /opt/apps/processor-sok-kt/shared/customer/customer.jar fi.relex.main.HttpStatusChecker
+
+45 18 * * * /opt/apps/processor-sok-kt/scripts/backup-database; /opt/apps/processor-sok-kt/scripts/backup-data -l 0 -r 0
+00 22 * * * /bin/find /opt/apps/processor-sok-kt/shared/log/ -mtime +7 -type f -not -name "*.bz2" | xargs bzip2
+
+#01 07 * * * /opt/apps/processor-sok-kt/current/WEB-INF/script/runner 'Java::FiRelexProcessor2FastormUtil::SoftCache.class_eval { field_reader :cache }; $stopc = AtomicLong.new; Job.start(:soft_cache_reap, "Soft cache cleaner") do |job|;   clean_start = 60 * 60;   clean_max = 2 * 60;   start_p = 0.35;   max_p = 0.60;   $stopc.set(0);   while $stopc.get == 0;     oldgen = java.lang.management.ManagementFactory.getMemoryPoolMXBeans.select { |b| b.name.downcase =~ /old gen/ }.first;     oldgen_p = oldgen.usage.used.to_f / java.lang.Runtime.get_runtime.max_memory.to_f;     Rails.logger.info "#{oldgen.usage}, #{oldgen_p}";     if oldgen_p >= start_p;       clean_t = (clean_start - (oldgen_p - start_p) * (clean_start - clean_max) / (max_p - start_p)).to_i;       clean_t = clean_max if clean_t < clean_max;       Rails.logger.info "Soft cache cleanup, t = #{clean_t}s = #{clean_t / 60}min";       t = System.currentTimeMillis - (clean_t * 1000);       FastormDb.database.soft_cache.cache.each { |k, v| FastormDb.database.soft_cache.cache.remove(k, v) unless k.to_s =~ /flattened/ || v.lastAccessStamp > t };       sleep 90;     end;     sleep 30;   end; end;'
+#Rsync backups to peitsi
+00 12 * * sun psql processor-sok-kt-preprocess_production -c "vacuum full"
+01 22 * * * sh /opt/capistrano/processor-sok-kt/scripts/backup-rsync-processor-sok-kt_peitsi.sh
+
+# TOPSI CHECKERS
+59 20 * * sat ${GENERIC_CHECKUPRUN} topsiWeekly contacts > /dev/null
+0 09 * * * ${GENERIC_CHECKUPRUN} topsiNonCritical1 contacts > /dev/null
+14 19 * * * ${GENERIC_CHECKUPRUN} topsiNonCritical2 contacts > /dev/null
+14 19 * * * ${GENERIC_CHECKUPRUN} topsiCriticalSales1 contacts > /dev/null
+59 22 * * * ${GENERIC_CHECKUPRUN} topsiCriticalSales2 contacts > /dev/null
+59 22 * * * ${GENERIC_CHECKUPRUN} topsiCriticalOpenOrder1 contacts > /dev/null
+#0 4 * * * ${GENERIC_CHECKUPRUN} topsiCriticalOpenOrder2 contacts > /dev/null
+59 22 * * * ${GENERIC_CHECKUPRUN} topsiCriticalBalance1 contacts > /dev/null
+#0 4 * * * ${GENERIC_CHECKUPRUN} topsiCriticalBalance2 contacts> /dev/null
+50 1 * * * ${GENERIC_CHECKUPRUN} topsiNonCriticalSuositushinta contacts > /dev/null
+14 19 * * * ${GENERIC_CHECKUPRUN} topsiNonCriticalMarttiTuotesuhde contacts > /dev/null
+14 19 * * * ${GENERIC_CHECKUPRUN} topsiNonCriticalMarttiToimitus contacts > /dev/null
+59 15 * * sat ${GENERIC_CHECKUPRUN} topsiWeeklyFullFileKetjuvalikoima contacts > /dev/null
+59 15 * * sat ${GENERIC_CHECKUPRUN} topsiWeeklyFullFileTilausvalikoima contacts > /dev/null
+59 15 * * sat ${GENERIC_CHECKUPRUN} topsiWeeklyFullFileSaldo contacts > /dev/null
+59 15 * * sat ${GENERIC_CHECKUPRUN} topsiWeeklyFullFileKaytettavatoimittaja contacts > /dev/null
+
+#Slow report loading monitoring:
+*/5 7-18 * * * /home/relex/nikkis/report_async_jobs.sh
+01 19 * * * /home/relex/nikkis/send_report_async_jobs.sh
+
+#Long lasting view report (sends to release-management inbox):
+55 23 * * * /home/relex/nikkis/parse_long_lasting_view_loads_form_rui_log.sh
+
+# Tunneling
+*/10 * * * * sh /home/relex/cli-tools/r_tunnel gw1_tunnel 2>&1>/dev/null
+*/10 * * * * sh /home/relex/cli-tools/r_tunnel alasin_tunnel 2>&1>/dev/null
+*/10 * * * * sh /home/relex/cli-tools/r_tunnel peitsi_tunnel 2>&1>/dev/null

@@ -1,0 +1,6 @@
+$ui_config.custom_extend(MetricRenderer) do
+    group :test do |g|
+    g.metric :customer_margin_with_ldp_2, "Margin % LDP", :type => :percentage, :aggregate => :sum,
+               :tql => "(transactions.sales_value - (transactions.sales_quantity * products.customer_ldp)) / sum(transactions.sales_value)
+               "                 end;
+    end;

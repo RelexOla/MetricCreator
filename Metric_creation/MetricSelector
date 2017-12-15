@@ -1,3 +1,25 @@
 MetricRenderer.all_fields.select{ |f|
-    f.name == :customer_test_metric_ola
-}.first.options[:tql] =    :tql => "level[user,products](sum(locations.code == '9000' && (daily_values.open && daily_values.balance > 0) || 0) / sum(locations.code == '9000' && (daily_values.date >= min(min_date(daily_values.open && daily_values.balance > 0), min_date(transactions.delivered_orders_quantity)) && daily_values.open)))"
+    f.name == :customer_margin_with_ldp_2
+}.first.options[:tql] =   "(sum(products.customer_ldp && transactions.sales_value) - sum(products.customer_ldp &&transactions.customer_ldp_margin)) / sum(products.customer_ldp &&transactions.sales_value)"
+
+
+
+MetricRenderer.all_fields.select{ |f|
+    f.name == :customer_margin_ldp_sum
+}.first.options[:tql] = "sum(transactions.customer_ldp_margin) / sum(transactions.customer_ldp_margin != null)"
+
+
+"(sum(products.customer_ldp &&transactions.sales_value) - sum(products.customer_ldp &&transactions.customer_ldp_margin)) / sum(products.customer_ldp &&transactions.sales_value)"                end;
+
+
+customer_ldp_margin
+
+
+OrderProposalRenderer.all_fields.select{ |f|
+    f.name == :customer_ldp_margin
+}.first.options[:type]
+
+
+Group2FinancialPlanningRenderer.all_fields.select{ |f|
+    f.name == :customer_ap_mmu_fp_fcst
+}.first.options[:tql] = "sum(group_2_financial_plannings.customer_ap_mmu_fp_fcst) / sum(group_2_financial_plannings.customer_ap_mmu_fp_fcst != null)"

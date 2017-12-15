@@ -1,0 +1,27 @@
+begin_trx;
+OrderProposal.where("comment_2 = 'Pallet-test'").all.update("sent_at", nil);
+OrderProposal.where("comment_2 = 'Pallet-test'").all.update("send_run_id", nil);
+commit;
+
+begin_trx;
+OrderProposal.where("comment_2 = 'jasmin_pallet-test'").all.update("sent_at", nil);
+OrderProposal.where("comment_2 = 'jasmin_pallet-test'").all.update("send_run_id", nil);
+commit;
+
+begin_trx;
+OrderProposal.where("send_run_id = 1348619731341").all.update("sent_at", nil);
+OrderProposal.where("send_run_id = 1348619731341").all.update("send_run_id", nil);
+commit;
+
+1348619731341
+
+
+
+
+
+begin_trx;
+OrderProposal.where("send_run_id = 1348619731341").all.update("comment_2", "jasmin_pallet-test");
+OrderProposal.where("comment_2 = 'Pallet-test'").all.update("send_run_id", nil);
+commit;
+
+

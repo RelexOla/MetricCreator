@@ -1,8 +1,7 @@
 $ui_config.custom_extend(MetricRenderer) do
     group :test do |g|
-    g.metric :customer_consecutive_days_2, "Peräkkäiset päivät ennakoitu toimitus Testi", :type => :quantity, :aggregate => :sum,
-               :tql => "period[sum(order_proposals.delivery_date)+1,sum(order_proposals.delivery_date)+1](sum(simulated_values.delivered_orders_quantity))"
-    end;
+    g.metric :customer_margin_with_ldp_2, "Margin % LDP  (LDP * sales quantity)", :type => :percentage, :aggregate => :sum,
+               :tql => "(sum(products.customer_ldp &&transactions.sales_value) - sum(products.customer_ldp &&transactions.customer_ldp_margin)) / sum(products.customer_ldp &&transactions.sales_value)"                end;
     end;
 
 

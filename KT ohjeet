@@ -1,0 +1,14 @@
+Yöajo kaatunut / Yöajo hidastunut merkittävästi
+
+1. a) Check if critical files have been read in succesfully. If not, they need to be read in before 7AM if possible.
+
+1. b) Reserve order proposals should've been calculated correctly and written to the server. You should now check if they still exist in database. If not, run the re-reading run to get them back.
+
+2. Run the correcting nightly run. This includes adapters and readers for all the critical data. If any files are missing, they need to be placed in messages/input before starting the correcting nightly run.
+
+3. Check the validation views to see that everything looks correct.
+
+
+
+Assortments: http://relex-kt-market-test.sok.fi/#workspace/valikoimavalidointi
+Transactions: http://relex-kt-market-test.sok.fi/#workspace/transaktiovalidointi
